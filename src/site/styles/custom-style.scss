@@ -1,26 +1,36 @@
 body {
-    /***
-    ADD YOUR CUSTOM STYLING HERE. (INSIDE THE body {...} section.)
-    IT WILL TAKE PRECEDENCE OVER THE STYLING IN THE STYLE.CSS FILE.
-    ***/
+    /* 强行覆盖全局变量 */
+    --sidebar-width: 240px !important; 
 
-    /* --- 这里开始粘贴新代码 --- */
-    
-    --sidebar-width: 250px; /* 如果觉得还太宽，可以改成 220px */
-
+    /* 针对左侧栏容器的精准控制 */
     .sidebar-left {
-        width: var(--sidebar-width) !important;
-        min-width: var(--sidebar-width) !important;
-        max-width: var(--sidebar-width) !important;
-        flex-basis: var(--sidebar-width) !important;
+        width: 240px !important;
+        flex: 0 0 240px !important; /* 核心：禁止缩放，固定为240px */
+        min-width: 240px !important;
+        max-width: 240px !important;
     }
 
-    /* 适配手机端，防止手机上侧边栏也只有 250px 宽导致看不清 */
+    /* 针对侧边栏内部导航列表，防止内部文字撑开宽度 */
+    .nav-view-outer {
+        width: 100% !important;
+        overflow-x: hidden !important; /* 隐藏横向溢出 */
+    }
+
+    /* 增加中间内容区的占比 */
+    .content {
+        flex: 1 !important;
+        width: auto !important;
+        max-width: 900px !important; /* 让内容区可以更宽一点 */
+        padding-left: 20px !important;
+        padding-right: 20px !important;
+    }
+
+    /* 手机端适配：恢复全屏 */
     @media (max-width: 768px) {
         .sidebar-left {
             width: 100% !important;
+            flex: 0 0 100% !important;
             max-width: 100% !important;
-            min-width: 100% !important;
         }
     }
 }
