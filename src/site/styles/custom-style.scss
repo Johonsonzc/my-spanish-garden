@@ -1,13 +1,26 @@
 body {
     /***
-      ADD YOUR CUSTOM STYLING HERE. (INSIDE THE body {...} section.)
-      IT WILL TAKE PRECEDENCE OVER THE STYLING IN THE STYLE.CSS FILE.
-   ***/
-    //  background-color: white;
-    //  .content {
-    //   font-size: 14px;
-    //  }
-    //  h1 {
-    //   color: black;
-    //  }
+    ADD YOUR CUSTOM STYLING HERE. (INSIDE THE body {...} section.)
+    IT WILL TAKE PRECEDENCE OVER THE STYLING IN THE STYLE.CSS FILE.
+    ***/
+
+    /* --- 这里开始粘贴新代码 --- */
+    
+    --sidebar-width: 250px; /* 如果觉得还太宽，可以改成 220px */
+
+    .sidebar-left {
+        width: var(--sidebar-width) !important;
+        min-width: var(--sidebar-width) !important;
+        max-width: var(--sidebar-width) !important;
+        flex-basis: var(--sidebar-width) !important;
+    }
+
+    /* 适配手机端，防止手机上侧边栏也只有 250px 宽导致看不清 */
+    @media (max-width: 768px) {
+        .sidebar-left {
+            width: 100% !important;
+            max-width: 100% !important;
+            min-width: 100% !important;
+        }
+    }
 }
