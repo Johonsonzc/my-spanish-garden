@@ -1,23 +1,61 @@
-/* 彻底修复电脑端左侧文件树导航栏遮挡正文的问题 */
-@media screen and (min-width: 768px) {
-    /* 1. 强制将文章核心区域向右推 300px（避开侧边栏宽度） */
-    main.content-core,
-    .dg-content-container {
-        margin-left: 300px !important; 
-        padding-left: 40px !important; /* 给文字左侧加点呼吸空间 */
-        width: calc(100% - 300px) !important;
-        box-sizing: border-box !important;
-    }
+/* ====== 优化西语学习花园整体排版与阅读体验 ====== */
 
-    /* 2. 确保左侧导航栏死死固定在左侧，并且有不透明的背景色 */
+@media screen and (min-width: 1024px) { /* 针对电脑大屏幕的优化 */
+
+    /* --- 1. 左侧导航栏：变窄、加微小分割线增加精致感 --- */
     .sidebar.left-sidebar {
         position: fixed !important;
         left: 0 !important;
         top: 0 !important;
-        width: 300px !important;
+        width: 230px !important; /* 【左侧变窄】从原来的 300px 改为更紧凑的 230px */
         height: 100vh !important;
-        background-color: var(--background-primary, #1e1e1e) !important; /* 防止背景透明导致文字透过来 */
+        background-color: var(--background-primary, #1e1e1e) !important;
+        border-right: 1px solid rgba(255, 255, 255, 0.05) !important; /* 增加极弱的右侧明暗分割线，提升质感 */
         z-index: 999 !important;
         overflow-y: auto !important;
     }
+
+    /* --- 2. 整体大容器：精准让出左侧空间 --- */
+    main.content-core {
+        margin-left: 230px !important; /* 与左侧栏的 230px 严格对应 */
+        width: calc(100% - 230px) !important;
+        box-sizing: border-box !important;
+    }
+
+    /* --- 3. 正文与右侧栏的横向布局结构 --- */
+    /* 我们把正文和右栏作为一个整体，让它们在剩余空间里居中显示 */
+    .dg-content-container {
+        display: flex !important;
+        flex-direction: row !important;
+        justify-content: center !important; /* 整体居中，两边留白更均匀 */
+        align-items: flex-start !important;
+        padding: 40px 20px !important; /* 上下左右留出呼吸空间 */
+        gap: 60px !important; /* 【核心距离】强制拉开正文和右侧栏的距离！不再紧贴 */
+        box-sizing: border-box !important;
+    }
+
+    /* --- 4. 正文核心阅读区：限制最舒适的阅读宽度 --- */
+    .content, 
+    .markdown-preview-view {
+        max-width: 740px !important; /* 【黄金阅读宽度】限制正文最大宽度，避免一行字太长导致阅读疲劳 */
+        width: 100% !important;
+        margin: 0 !important; 
+        padding: 0 !important;
+    }
+
+    /* --- 5. 右侧辅助栏：限制宽度并加上左侧边缘线 --- */
+    .sidebar.right-sidebar {
+        flex-shrink: 0 !important; /* 防止右侧栏被正文挤压变形 */
+        width: 250px !important; /* 右侧栏固定宽度 */
+        padding-left: 20px !important;
+        border-left: 1px solid rgba(255, 255, 255, 0.05) !important; /* 增加左侧微弱分割线，划分视线 */
+    }
+}
+
+/* --- 适配中等屏幕尺寸（如小笔记本/iPad），稍微紧凑一些 --- */
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+    .sidebar.left-sidebar { width: 200px !important; }
+    main.content-core { margin-left: 200px !important; width: calc(100% - 200px) !important; }
+    .dg-content-container { display: flex !important; gap: 30px !important; padding: 30px 20px !important; }
+    .content { max-width: 100% !important; }
 }
