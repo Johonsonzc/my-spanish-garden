@@ -1,9 +1,23 @@
-/* 修复电脑端左侧文件树导航栏遮挡正文的问题 */
+/* 彻底修复电脑端左侧文件树导航栏遮挡正文的问题 */
 @media screen and (min-width: 768px) {
-    .content, 
+    /* 1. 强制将文章核心区域向右推 300px（避开侧边栏宽度） */
+    main.content-core,
     .dg-content-container {
-        margin-left: 260px !important; /* 如果侧边栏更宽，可以把 260px 改大，比如 280px 或 300px */
-        padding-left: 20px !important;
-        box-sizing: border-box;
+        margin-left: 300px !important; 
+        padding-left: 40px !important; /* 给文字左侧加点呼吸空间 */
+        width: calc(100% - 300px) !important;
+        box-sizing: border-box !important;
+    }
+
+    /* 2. 确保左侧导航栏死死固定在左侧，并且有不透明的背景色 */
+    .sidebar.left-sidebar {
+        position: fixed !important;
+        left: 0 !important;
+        top: 0 !important;
+        width: 300px !important;
+        height: 100vh !important;
+        background-color: var(--background-primary, #1e1e1e) !important; /* 防止背景透明导致文字透过来 */
+        z-index: 999 !important;
+        overflow-y: auto !important;
     }
 }
