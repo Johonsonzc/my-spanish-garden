@@ -1,37 +1,9 @@
-/* 1. 强制重置整体布局容器 */
-.content-layout {
-    display: flex !important;
-    justify-content: flex-start !important;
-    gap: 0 !important;
-    width: 100% !important;
-    margin: 0 !important;
-    padding: 0 !important;
-}
-
-/* 2. 锁定左侧栏：防止它撑开或缩进 */
-.sidebar-left {
-    width: 250px !important;
-    min-width: 250px !important;
-    max-width: 250px !important;
-    flex: 0 0 250px !important;
-}
-
-/* 3. 核心修复：强制拉回中间内容区，消除重叠 */
-.content {
-    flex: 1 1 auto !important;
-    /* 关键：强制覆盖原模板巨大的左边距 */
-    margin-left: 20px !important; 
-    margin-right: 20px !important;
-    max-width: 850px !important;
-    min-width: 0 !important;
-    position: relative !important;
-    left: 0 !important;
-}
-
-/* 4. 锁定右侧栏：防止它飘到中间 */
-.sidebar-right {
-    width: 240px !important;
-    min-width: 240px !important;
-    flex: 0 0 240px !important;
-    display: block !important;
+/* 修复电脑端左侧文件树导航栏遮挡正文的问题 */
+@media screen and (min-width: 768px) {
+    .content, 
+    .dg-content-container {
+        margin-left: 260px !important; /* 如果侧边栏更宽，可以把 260px 改大，比如 280px 或 300px */
+        padding-left: 20px !important;
+        box-sizing: border-box;
+    }
 }
