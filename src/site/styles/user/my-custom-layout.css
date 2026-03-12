@@ -1,45 +1,51 @@
+/* 1. 定义全局宽度变量 */
 :root {
-    --sidebar-first-width: 250px !important;
-    --sidebar-second-width: 220px !important;
+    --sidebar-left-width: 250px !important;
+    --sidebar-right-width: 240px !important;
 }
 
+/* 2. 强制左侧栏固定 */
 .sidebar-left {
-    width: var(--sidebar-first-width) !important;
-    flex: 0 0 var(--sidebar-first-width) !important;
-    min-width: var(--sidebar-first-width) !important;
-    max-width: var(--sidebar-first-width) !important;
+    width: var(--sidebar-left-width) !important;
+    flex: 0 0 var(--sidebar-left-width) !important;
+    min-width: var(--sidebar-left-width) !important;
+    position: relative !important; /* 取消可能存在的 absolute 定位 */
+    left: 0 !important;
 }
 
+/* 3. 核心：重置中间和右侧的排版逻辑 */
 .content-layout {
     display: flex !important;
     flex-direction: row !important;
-    justify-content: center !important;
     width: 100% !important;
-    gap: 30px !important;
-}
-
-.content {
-    flex: 1 1 auto !important;
-    min-width: 0 !important;
-    max-width: 800px !important;
     margin: 0 !important;
+    padding: 0 !important;
+    gap: 0 !important;
 }
 
-.sidebar-right {
-    width: var(--sidebar-second-width) !important;
-    flex: 0 0 var(--sidebar-second-width) !important;
-    min-width: var(--sidebar-second-width) !important;
+/* 4. 修复中间内容区：不再使用 margin 撑开空间，而是使用 flex 自动填充 */
+.content {
+    flex: 1 1 auto !important; /* 核心：自动占据剩余空间 */
+    min-width: 0 !important;
+    max-width: 900px !important; /* 限制阅读宽度，防止太宽 */
+    margin-left: 20px !important; /* 只留一点点间距 */
+    margin-right: 20px !important;
     position: relative !important;
+    left: 0 !important; /* 修正重叠位移 */
+}
+
+/* 5. 修复右侧栏：防止它飘到中间 */
+.sidebar-right {
+    width: var(--sidebar-right-width) !important;
+    flex: 0 0 var(--sidebar-right-width) !important;
+    min-width: var(--sidebar-right-width) !important;
+    position: relative !important;
+    right: 0 !important;
     display: block !important;
 }
 
-@media (max-width: 1024px) {
-    .content-layout {
-        flex-direction: column !important;
-    }
-    .sidebar-left, .sidebar-right, .content {
-        width: 100% !important;
-        max-width: 100% !important;
-        flex: none !important;
-    }
+/* 6. 处理文字重叠：强制换行 */
+.content * {
+    white-space: normal !important;
+    overflow-wrap: break-word !important;
 }
