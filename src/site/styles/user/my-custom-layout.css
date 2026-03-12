@@ -1,61 +1,64 @@
-/* ====== 优化西语学习花园整体排版与阅读体验 ====== */
+/* ====== 彻底修复并优化西语学习花园排版（终极修正版） ====== */
 
-@media screen and (min-width: 1024px) { /* 针对电脑大屏幕的优化 */
+@media screen and (min-width: 1024px) { 
 
-    /* --- 1. 左侧导航栏：变窄、加微小分割线增加精致感 --- */
+    /* --- 1. 左侧导航栏：固定在最左侧并限制宽度 --- */
     .sidebar.left-sidebar {
         position: fixed !important;
         left: 0 !important;
         top: 0 !important;
-        width: 230px !important; /* 【左侧变窄】从原来的 300px 改为更紧凑的 230px */
+        width: 250px !important; 
         height: 100vh !important;
         background-color: var(--background-primary, #1e1e1e) !important;
-        border-right: 1px solid rgba(255, 255, 255, 0.05) !important; /* 增加极弱的右侧明暗分割线，提升质感 */
+        border-right: 1px solid rgba(255, 255, 255, 0.08) !important; 
         z-index: 999 !important;
         overflow-y: auto !important;
     }
 
-    /* --- 2. 整体大容器：精准让出左侧空间 --- */
+    /* --- 2. 整体核心内容区：精确让出左侧 250px 的空间，不再挤压 --- */
     main.content-core {
-        margin-left: 230px !important; /* 与左侧栏的 230px 严格对应 */
-        width: calc(100% - 230px) !important;
+        margin-left: 250px !important; 
+        width: calc(100% - 250px) !important;
+        padding: 0 !important;
         box-sizing: border-box !important;
     }
 
-    /* --- 3. 正文与右侧栏的横向布局结构 --- */
-    /* 我们把正文和右栏作为一个整体，让它们在剩余空间里居中显示 */
+    /* --- 3. 正文与右侧栏的横向完美布局 (Flexbox) --- */
     .dg-content-container {
         display: flex !important;
         flex-direction: row !important;
-        justify-content: center !important; /* 整体居中，两边留白更均匀 */
+        justify-content: center !important; 
         align-items: flex-start !important;
-        padding: 40px 20px !important; /* 上下左右留出呼吸空间 */
-        gap: 60px !important; /* 【核心距离】强制拉开正文和右侧栏的距离！不再紧贴 */
+        gap: 60px !important; /* 强行拉开正文与右侧栏的呼吸间距 */
+        max-width: 1200px !important; /* 限制网页最大宽度，在大屏幕上会优雅地整体居中 */
+        margin: 0 auto !important; 
+        padding: 40px 30px !important;
         box-sizing: border-box !important;
     }
 
-    /* --- 4. 正文核心阅读区：限制最舒适的阅读宽度 --- */
-    .content, 
-    .markdown-preview-view {
-        max-width: 740px !important; /* 【黄金阅读宽度】限制正文最大宽度，避免一行字太长导致阅读疲劳 */
+    /* --- 4. 正文核心阅读区（精确瞄准，解决左侧文字被切断的Bug！） --- */
+    main.content-core .markdown-preview-view {
+        flex: 1 1 auto !important;
         width: 100% !important;
-        margin: 0 !important; 
+        max-width: 720px !important; /* 【黄金阅读宽度】让视线舒服地集中在中间 */
+        margin: 0 auto !important; /* 强制居中对齐 */
         padding: 0 !important;
+        box-sizing: border-box !important;
     }
 
-    /* --- 5. 右侧辅助栏：限制宽度并加上左侧边缘线 --- */
+    /* --- 5. 右侧辅助栏：固定宽度并加上左侧边缘线 --- */
     .sidebar.right-sidebar {
-        flex-shrink: 0 !important; /* 防止右侧栏被正文挤压变形 */
-        width: 250px !important; /* 右侧栏固定宽度 */
+        flex: 0 0 250px !important; /* 锁定宽度，坚决不被正文挤压 */
+        width: 250px !important; 
         padding-left: 20px !important;
-        border-left: 1px solid rgba(255, 255, 255, 0.05) !important; /* 增加左侧微弱分割线，划分视线 */
+        border-left: 1px solid rgba(255, 255, 255, 0.08) !important; 
     }
 }
 
-/* --- 适配中等屏幕尺寸（如小笔记本/iPad），稍微紧凑一些 --- */
+/* --- 适配中等屏幕（如 iPad / 小尺寸笔记本），屏幕变窄时自动紧凑 --- */
 @media screen and (min-width: 768px) and (max-width: 1023px) {
-    .sidebar.left-sidebar { width: 200px !important; }
-    main.content-core { margin-left: 200px !important; width: calc(100% - 200px) !important; }
-    .dg-content-container { display: flex !important; gap: 30px !important; padding: 30px 20px !important; }
-    .content { max-width: 100% !important; }
+    .sidebar.left-sidebar { width: 220px !important; }
+    main.content-core { margin-left: 220px !important; width: calc(100% - 220px) !important; }
+    .dg-content-container { gap: 30px !important; padding: 30px 20px !important; }
+    main.content-core .markdown-preview-view { max-width: 100% !important; }
 }
